@@ -287,7 +287,8 @@ class File(tables.File):
         mymap[:] = entries
 
         return mymap
-
+    
+    # Convert omx to xlsx files	
     def to_xlsx(self):
         m=self.list_matrices()
         l = []
@@ -301,7 +302,7 @@ class File(tables.File):
                 arr=np.insert(arr,0,labels_y,axis=1)
                 l.append(arr)
         for k,i in enumerate(l):
-                print("%s / %s" %(k+1,len(l)-1))
+                print("Convert %s from  %s" %(k+1,len(l)-1))
                 df = pd.DataFrame(i)
                 df.to_excel(m[k]+'.xlsx', index=False)
 
