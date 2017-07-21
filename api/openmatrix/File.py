@@ -1,4 +1,7 @@
 import numpy as np
+import pandas as pd
+import operator
+
 import tables  # requires pytables >= 3.1
 
 from .Exceptions import *
@@ -285,6 +288,22 @@ class File(tables.File):
 
         return mymap
 
+    def to_xlsx(self):
+        m=self.list_matrices()
+        l = []
+        labels = self.mapping(self.listMappings()[0])
+        labels= sorted(labels.items(), key=operator.itemgetter(0))
+        labels = [i[0] for i in labels]
+        labels_y = [0]+labels
+        for i in m:
+                arr = self[i].read()
+                arr=np.insert(arr,0,labels,axis=0)
+                arr=np.insert(arr,0,labels_y,axis=1)
+                l.append(arr)
+        for k,i in enumerate(l):
+                print("%s / %s" %(k+1,len(l)-1))
+                df = pd.DataFrame(i)
+                df.to_excel(m[k]+'.xlsx', index=False)
 
     # The following functions implement Python list/dictionary lookups. ----
     def __getitem__(self,key):
