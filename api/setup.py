@@ -17,6 +17,7 @@ setup(
     install_requires=[
         "tables >= 3.1.0",
         "numpy >= 1.5.0",
+        "pandas"
     ],
     classifiers=[
         'License :: OSI Approved :: Apache Software License'
